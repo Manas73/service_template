@@ -1,0 +1,10 @@
+{
+  "github_username": "Manas73",
+  "python_version": "3.12",
+  "project_name": "Sample Project",
+  "project_short_description": "Sample project generated from the Service Template.",
+  "python_version_next": "{{ '{:.2f}'.format((cookiecutter.python_version|float * 100 + 1) / 100) }}",
+  "project_slug": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+  "pkg_name": "{{ cookiecutter.project_slug|replace('-', '_') }}",
+  "base_error_name": "{{ cookiecutter.project_name|replace(' ', '') }}Error"
+}

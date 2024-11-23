@@ -1,0 +1,120 @@
+[project]
+name = "{{ cookiecutter.project_slug }}"
+version = "0.1.0"
+description = "{{ cookiecutter.project_short_description }}"
+readme = "README.md"
+requires-python = ">= {{ cookiecutter.python_version }}, < {{ cookiecutter.python_version_next }}"
+dependencies = [
+    "aiohttp>=3.11.5",
+    "dependency-injector>=4.43.0",
+    "fastapi>=0.115.5",
+    "gunicorn>=23.0.0",
+    "pydantic>=2.9.2",
+    "pydantic-settings>=2.6.1",
+    "python-multipart>=0.0.17",
+    "uvicorn>=0.32.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "mypy>=1.13.0",
+    "pytest>=8.3.3",
+    "pytest-async>=0.1.1",
+    "pytest-cov>=6.0.0",
+    "pytest-sugar>=1.0.0",
+    "ruff>=0.7.4",
+]
+
+
+[tool.mypy]
+python_version = "{{ cookiecutter.python_version }}"
+ignore_missing_imports = true
+
+[tool.ruff]
+extend-select = [
+    "E", # flake8 excluding black Conflicts
+    "I", # isort
+    "N", # pep8-naming
+    "D", # pydocstyle
+    "UP", # pyupgrade
+    "PD", # pandas -vet
+    "ANN001", # flake8-annotations missing-type-function-argument
+    "T20", # flake8-print
+    "TID", # flake8-tidy-imports
+    "ASYNC", #flake8-async
+]
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+line-length = 120
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Assume Python {{ cookiecutter.python_version }}
+target-version = "py{{ cookiecutter.python_version|float * 100 }}"
+
+# Ignore `E402` (import violations) in all `__init__.py` files, and in `path/to/file.py`.
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+"**/{tests,docs,tools}/*" = ["D", "ANN"]
+
+[tool.ruff.lint]
+# On top of the Google convention, disable `D100` and `D104`, which require
+# documentation for every public package and public module respectively.
+ignore = ["D100", "D104"]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.pep8-naming]
+# Allow Pydantic's `@field_validator`, `root_validator`, and `model_validator` decorator to trigger class method treatment.
+classmethod-decorators = ["pydantic.field_validator", "pydantic.v1.root_validator", "pydantic.model_validator"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+addopts = "-v --cov={{ cookiecutter.pkg_name }} --cov-report term-missing --force-sugar"
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
