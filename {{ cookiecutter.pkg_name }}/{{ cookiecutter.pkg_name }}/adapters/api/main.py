@@ -4,9 +4,9 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from {{ cookiecutter.pkg_name }}.adapters.api import v1_router, welcome_router
-from {{ cookiecutter.pkg_name }}.adapters.middlewares import ExceptionHandlingMiddleware
-from {{ cookiecutter.pkg_name }}.container import Container
+from {{ cookiecutter.pkg_name }}.adapters.api.container import Container
+from {{ cookiecutter.pkg_name }}.adapters.api.middlewares import ExceptionHandlingMiddleware
+from {{ cookiecutter.pkg_name }}.adapters.api.routes import v1_router, welcome_router
 
 
 def create_app() -> FastAPI:

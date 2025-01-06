@@ -18,4 +18,4 @@ RUN uv sync --frozen
 
 EXPOSE 4003
 
-CMD ["/app/.venv/bin/gunicorn", "{{ cookiecutter.pkg_name }}.main:app", "--config", "/app/gunicorn.conf.py"]
+CMD ["/app/.venv/bin/gunicorn", "{{ cookiecutter.pkg_name }}.adapters.api.main:app", "--config", "/app/gunicorn.conf.py"]

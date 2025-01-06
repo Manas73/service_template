@@ -4,7 +4,7 @@ from {{ cookiecutter.pkg_name }}.config.settings import Settings
 
 
 class Container(containers.DeclarativeContainer):
-    """Dependency injection container for the analytics service application.
+    """Dependency injection container for the  service application.
 
     Attributes:
         wiring_config (WiringConfiguration): Configuration for wiring modules.
@@ -15,10 +15,8 @@ class Container(containers.DeclarativeContainer):
 
     wiring_config = containers.WiringConfiguration(
         modules=[
-            "{{ cookiecutter.pkg_name }}.adapters.api.v1.sample_endpoint",
+            "{{ cookiecutter.pkg_name }}.adapters.api.routes.v1.sample_endpoint",
         ]
     )
     settings_provider = providers.Singleton(Settings)
     config = settings_provider()
-
-

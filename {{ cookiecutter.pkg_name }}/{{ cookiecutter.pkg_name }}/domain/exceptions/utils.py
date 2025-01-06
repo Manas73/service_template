@@ -2,8 +2,8 @@ from {{ cookiecutter.pkg_name }}.domain.exceptions.{{ cookiecutter.pkg_name }}_e
 
 
 def get_fastapi_error_response(
-    errors: list[{{ cookiecutter.base_error_name }}],
-    successful_response: dict = None,
+        errors: list[{{ cookiecutter.base_error_name }}],
+        successful_response: dict = None,
 ) -> dict[int, dict]:
     """Generates a dictionary of FastAPI error responses based on a list of {{ cookiecutter.base_error_name }}.
 

@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 
-from {{ cookiecutter.pkg_name }}.adapters.validators import HelloWorldResponse
+from {{ cookiecutter.pkg_name }}.adapters.api.validators import HelloWorldResponse
 
 router = APIRouter()
 
