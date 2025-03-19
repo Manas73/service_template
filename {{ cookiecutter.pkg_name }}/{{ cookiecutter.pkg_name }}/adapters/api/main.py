@@ -4,9 +4,10 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from {{ cookiecutter.pkg_name }}.adapters.api.container import Container
+from {{ cookiecutter.pkg_name }}.adapters.api.containers import Container
 from {{ cookiecutter.pkg_name }}.adapters.api.middlewares import ExceptionHandlingMiddleware
 from {{ cookiecutter.pkg_name }}.adapters.api.routes import v1_router, welcome_router
+from {{ cookiecutter.pkg_name }}.settings import LoggerSettings
 
 
 def create_app() -> FastAPI:
@@ -33,7 +34,8 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
-
+logger = logging.getLogger("{{ cookiecutter.pkg_name }}")
+logging_config.dictConfig(LoggerSettings.get_config())
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, workers=1, reload=True)

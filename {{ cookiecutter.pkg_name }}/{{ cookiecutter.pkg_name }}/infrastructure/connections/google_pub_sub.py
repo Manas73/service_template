@@ -1,10 +1,10 @@
 from google.cloud import pubsub_v1
 
-from {{ cookiecutter.pkg_name }}.domain.interfaces import IDatabaseConnection
 from {{ cookiecutter.pkg_name }}.infrastructure.connections.google_pubsub_config import GooglePubSubConfig
+from {{ cookiecutter.pkg_name }}.infrastructure.connections.interfaces.message_queue import IMessageQueue
 
 
-class GooglePubSubConnection(IDatabaseConnection):
+class GooglePubSubConnection(IMessageQueue):
     """A class for connecting to Google Cloud Pub/Sub."""
 
     def __init__(self, config: GooglePubSubConfig):
@@ -12,6 +12,7 @@ class GooglePubSubConnection(IDatabaseConnection):
         self.config = config
         self.connection = pubsub_v1.PublisherClient()
 
-    def get_connection(self) -> pubsub_v1.PublisherClient:
-        """Get the Pub/Sub publisher client connection."""
-        return self.connection
+    async def publish_message(self, topic: str, message: bytes) -> None:
+        """Publish a message to the specified topic."""
+        future = self.connection.publish(topic, message)
+        future.result(timeout=30)

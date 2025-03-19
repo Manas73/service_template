@@ -7,32 +7,51 @@
 
 ## Installation
 
-1. Clone the repository:
-    ```shell
-    git clone https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.pkg_name }}.git
-    cd {{ cookiecutter.pkg_name }}
-    ```
+### Local Environment
+
+1. Install Python {{ cookiecutter.python_version }}
+   ```shell
+   uv python install {{ cookiecutter.python_version }}
+   ```
 
 2. Create a virtual environment and install dependencies using UV:
-    ````shell
+    ```shell
     uv sync
-    ````
-
-## Starting the API Service
-
-To start the API service using Docker, follow these steps:
-
-1. Build the Docker image:
-    ```shell
-    docker build -f api_service.Dockerfile -t {{ cookiecutter.pkg_name }} .
     ```
 
-2. Run the Docker container:
+3. Run the service:
     ```shell
-    docker run --rm -p 4003:4003 {{ cookiecutter.pkg_name }}:latest
+    uv run uvicorn {{ cookiecutter.pkg_name }}.adapters.api.main:app --reload --port 8000
     ```
 
-3. Access the API by navigating to: [http://0.0.0.0:4003](http://0.0.0.0:4003)
+4. Access the API documentation by opening your web browser and navigate to `http://localhost:8000/docs` to view the Swagger UI for the API.
+
+
+### Docker
+
+1. Create the network
+
+   ```shell
+   docker network create shared
+   ```
+
+2. Build the container
+
+   ```shell
+   docker build -t {{ cookiecutter.pkg_name }} .
+   ```
+
+3. Run the container by using
+
+   ```shell
+   docker run --rm -p 4003:4003 {{ cookiecutter.pkg_name }}
+   ```
+   ​    or
+
+   ```shell
+   docker run --rm -p 4003:4003 -e --network host {{ cookiecutter.pkg_name }}
+   ```
+
 
 ### Codestyle checks
 Commiting code requires it to pass several code checks:
